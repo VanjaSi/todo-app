@@ -1,11 +1,26 @@
 const express = require('express')
-const {PORT} = require('./config/constants')
+const mongoose = require('mongoose')
+const {PORT, MONGO_URI} = require('./config/constants')
+const todoRoutes = require('./routes/todos')
 
 const server = express()
 
-server.listen(PORT, (err)=>{
+//middlewares
+server.use(express.json())
 
-    if(err) console.log(err);
+//routes
+server.use('/api',todoRoutes)
 
-    console.log(`Server running on: http://localhost:${PORT}`);
+//Mongodb connection
+mongoose.connect(MONGO_URI,{dbName:'todo_mern_app'})
+.then(()=>{
+    console.log('MongoDB connected...');
+    //server connection
+    server.listen(PORT, (err)=>{
+
+        if(err) console.log(err);
+         console.log(`Server running on: http://localhost:${PORT}`);
+    })
 })
+.catch(err=>console.log(`MongoDb connection error: ${err}`))
+
