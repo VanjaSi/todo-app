@@ -23,14 +23,14 @@ const createTodo = async (req,res,next)=>{
     const {text, category} = req.body
 
     if(!text){
-       emptyFields.push('todo text')
+       emptyFields.push('todo')
     }
     if(!category){
         emptyFields.push('category')
 
     }
     if(emptyFields.length > 0){
-       return res.status(400).json({error:"All fields are required", emptyFields})
+       return res.status(400).json({error:"All fields are required!", emptyFields})
     }
 
     try {

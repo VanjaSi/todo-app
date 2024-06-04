@@ -1,12 +1,15 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const cors = require('cors')
 const {PORT, MONGO_URI} = require('./config/constants')
+const {corsOptions} = require('./config/config')
 const todoRoutes = require('./routes/todos')
 
 const server = express()
 
 //middlewares
 server.use(express.json())
+server.use(cors(corsOptions))
 
 //routes
 server.use('/api',todoRoutes)

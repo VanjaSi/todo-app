@@ -1,25 +1,30 @@
 import { useEffect, useState } from "react";
+import { useTodoContext } from "../hooks/useTodoContext";
 import Todo from "../components/Todo";
 import TodoForm from "../components/TodoForm";
 import { BsArrowDownSquareFill } from "react-icons/bs";
 
 const Home = () => {
 
-    const [todos, setTodos] = useState(null)
+    const{todos, dispatch} = useTodoContext()    
     const [showForm, setShowForm] = useState(false)
 
     useEffect(()=>{
         const fetchTodos = async()=>{
 
             try {
-                const response = await fetch('/api/todo')
+                const response = await fetch('/api/todo',{
+                    withCredentials: true,
+                  })
 
                 if(!response.ok){
                     throw new Error('Failed to fetch todos')
                 }
                 const json = await response.json()
-                setTodos(json)
-                console.log(json);
+               dispatch({
+                type:'SET_TODO',
+                payload:json
+               })
                
             } catch (error) {
                 console.error('Error fetching todos',error);
@@ -29,7 +34,7 @@ const Home = () => {
         fetchTodos()
 
 
-    },[])
+    },[dispatch])
 
     return (
         <div className="container home">

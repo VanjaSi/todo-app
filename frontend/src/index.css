@@ -46,6 +46,9 @@ a{
 .react-icon:hover{
   transform: var(--scale);
 }
+.error{
+  color: var(--error-color);
+}
 
 /* HEADER */
 header .container{
@@ -92,6 +95,8 @@ header h1{
   margin-bottom: 5px;
   letter-spacing: 1px;
   border-bottom: 2px solid #ddd;
+  display: flex; align-items: center;
+  gap: 20px;
   
 }
 .todo p{
@@ -99,11 +104,12 @@ header h1{
 }
 .todo .priority{
   position: relative;
+  width: 200px;
 }
 .todo .priority-text{
   position:absolute;
   top: 50%;
-  left: 20%;
+  left: 50%;
   transform: translateY(-50%);
   background-color: #928f8fb3;
   padding: 5px 10px;
@@ -115,7 +121,55 @@ header h1{
 }
 .todo .priority:hover .priority-text{
   display: block;
+}
 
+/* checkbox */
+.todo .custom-checkbox {
+  border: 2px solid var(--main-color);
+  border-radius: var(--border-radius);
+  display: flex;
+  justify-content: center;
+  align-items:center;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  position: relative;
+
+}
+.todo input[type="checkbox"]{
+ opacity: 0;
+ position: absolute;
+ cursor: pointer;
+ height: 0;
+ width: 0;
+}
+
+.todo .checkbox-mark {
+  display:inline-block;
+}
+
+
+.checkbox-mark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.custom-checkbox input:checked + .checkbox-mark:after {
+  display: block;
+
+}
+
+.custom-checkbox .checkbox-mark:after {
+  left: 5px;
+  top: 1px;
+  width: 5px;
+  height: 10px;
+  border: solid var(--main-color);
+  border-width: 0 3px 3px 0;
+  color: var(--main-color);
+
+  transform: rotate(45deg);
 }
 
 /* form */
@@ -153,16 +207,26 @@ header h1{
   margin: 5px 0;
 
 }
-.todo-form input{
+.todo-form input , select{
   padding: 10px;
   border-radius: var(--border-radius);
   border: 1px solid #fff;
   display: block;
   width: 100%;
+
+
+
+}
+.todo-form select {
+  color: #747272;
 }
 .todo-form button {
   border:1px solid var(--main-color);
   margin: 10px 0;
   width: 100%;
   color: var(--main-color);
+}
+
+.todo-form input.error{
+  border: 1px solid var(--error-color);
 }
